@@ -1,0 +1,104 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+        border: 1vh solid #1098ad;
+      }
+
+      .block-1 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+
+      .box {
+        background-color: #bdb9b9;
+        height: 150px;
+        flex-grow: 1;
+      }
+
+      .box-1 {
+        flex-shrink: 8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="block-1">
+        <div class="box box-1">A</div>
+        <div class="box box-2">B</div>
+        <div class="box box-3">C</div>
+      </div>
+      <div class="block-2">
+        <div class="box-4">C</div>
+        <div class="box-5">D</div>
+        <div class="box-6">E</div>
+      </div>
+      <div class="block-3">
+        <div class="box-7">F</div>
+        <div class="box-8">G</div>
+        <div class="box-9">H</div>
+      </div>
+    </div>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Flexbox: Task 4</title>
+
+    <style>
+      body {
+        background-color: #444;
+        color: #333;
+        font-size: 20px;
+        margin: 0;
+      }
+
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+
+        width: 450px;
+        list-style: none;
+      }
+
+      li {
+        background-color: #4d7298;
+        border: 2px solid #77a6b6;
+        border-radius: 0.5em;
+        color: white;
+        padding: 0.5em;
+        margin: 0.5em;
+        flex: 0 0 calc(33.33% - 1em);
+      }
+    </style>
+  </head>
+
+  <body>
+    <ul>
+      <li>Turnip</li>
+      <li>greens</li>
+      <li>yarrow</li>
+      <li>ricebean</li>
+      <li>rutabaga</li>
+      <li>endive</li>
+      <li>cauliflower</li>
+      <li>sea lettuce</li>
+      <li>kohlrabi</li>
+      <li>amaranth</li>
+    </ul>
+  </body>
+</html>
