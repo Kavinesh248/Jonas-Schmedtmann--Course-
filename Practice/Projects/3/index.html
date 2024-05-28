@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Helvetica, Arial, sans-serif;
+      }
+
+      h1 {
+        font-size: 60px;
+      }
+      h3 {
+        font-size: 32px;
+        font-weight: normal;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+      }
+      h6 {
+        font-size: 22px;
+      }
+
+      .banner h1,
+      .banner h3,
+      .banner h6 {
+        margin: 0;
+        text-shadow: 2px 2px 6px #000;
+        text-align: center;
+      }
+
+      .banner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/409269/banner-flowers.jpg")
+          top left/cover no-repeat;
+        height: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="banner">
+      <div class="banner-text">
+        <h1>Flexbox Banner</h1>
+        <h3>Perfectly Centered</h3>
+        <h6>No matter how many lines of text you use.</h6>
+      </div>
+    </div>
+  </body>
+</html>

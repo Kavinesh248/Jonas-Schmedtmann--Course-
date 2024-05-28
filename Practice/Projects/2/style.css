@@ -1,0 +1,60 @@
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  background: #333338;
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: #444;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  display: flex;
+  gap: 10px;
+}
+
+.main-content .panel img {
+  float: left;
+  margin: 0 10px 0 0;
+}
+
+.main-content,
+.sidebar {
+  background: #eee;
+  padding: 6px;
+}
+
+.main-content {
+  flex: 3;
+}
+
+.sidebar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.panel {
+  background: #fff;
+  padding: 20px;
+  margin: 10px;
+}
+
+.sidebar h3 {
+  font-size: 14px;
+  margin: 0;
+}
+
+.sidebar p {
+  font-size: 12px;
+}
