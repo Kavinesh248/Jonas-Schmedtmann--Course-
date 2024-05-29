@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  background-color: #cacaca;
+  padding: 10px;
+  margin: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: 500px;
+}
+
+.item {
+  background-color: #ff0037;
+  color: #fff;
+  font-size: 22px;
+  margin: 10px;
+  padding: 20px;
+}
