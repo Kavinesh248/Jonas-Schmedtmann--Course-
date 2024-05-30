@@ -1,0 +1,280 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  color: #444;
+  border-top: 10px solid #1098ad;
+  position: relative;
+}
+
+h1,
+h2,
+h3 {
+  color: #1098ad;
+}
+
+h1 {
+  font-size: 26px;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+article {
+  margin-bottom: 40px;
+}
+
+h2 {
+  font-size: 35px;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+h3 {
+  font-size: 30px;
+  margin-bottom: 20px;
+  margin-top: 40px;
+}
+
+h4 {
+  font-size: 20px;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+p {
+  font-size: 22px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+ol,
+ul {
+  margin-left: 60px;
+  margin-bottom: 20px;
+}
+
+li {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+li:last-child {
+  margin-bottom: 0;
+}
+
+.container {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.main-header {
+  background-color: #f7f7f7;
+  /* background-color: red; */
+  padding: 20px 20px;
+  margin-bottom: 60px;
+  height: auto;
+}
+
+.post-header {
+  margin-bottom: 30px;
+}
+
+/* descendant selector */
+/* footer p {
+  font-size: 16px;
+} */
+#copyright {
+  font-size: 16px;
+}
+
+/* nested descendant selector 
+ article header p {
+  font-style: italic;
+} */
+#author {
+  font-style: italic;
+}
+
+.related-author {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.related {
+  list-style: none;
+}
+
+.post-img {
+  width: 100%;
+  height: auto;
+}
+
+aside {
+  background-color: #f7f7f7;
+  border-top: 5px solid #1098ad;
+  border-bottom: 5px solid #1098ad;
+  padding: 40px 10px;
+}
+
+/*Pseudo classes*/
+/*ol*/
+li:first-child {
+  font-weight: bold;
+}
+
+/* Misconeption: This won't work
+article p:first-child{
+  color: red;
+}
+*/
+/* LVHA */
+/* Styling links */
+a:link {
+  color: #1098ad;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #1098ad;
+}
+
+a:hover {
+  color: orangered;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:active {
+  background-color: black;
+  font-style: italic;
+}
+
+button {
+  font-size: 22px;
+  padding: 10px;
+  cursor: pointer;
+
+  position: absolute;
+  /* top: 60px;
+  left: 100px; */
+  right: 100px;
+  bottom: 60px;
+}
+
+nav a:link {
+  display: inline-block;
+  /* margin-top: 10px; */
+  margin-right: 30px;
+}
+
+nav a:link:last-child {
+  margin-right: 0;
+}
+
+h1::first-letter {
+  font-style: normal;
+}
+
+h2::after {
+  content: "TOP";
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #ffe70e;
+  padding: 5px 10px;
+  position: absolute;
+  top: -20px;
+  right: -25px;
+}
+
+/* Resolving conflicts */
+/* 
+#copyright {
+ : red;
+}
+
+.copyright {
+color: blue;
+}
+
+.text {
+color: yellow;
+}
+
+footer p {
+color: green !important;
+} */
+
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.author-box {
+  display: flex;
+  align-items: center;
+}
+
+.author {
+  margin: 0;
+  margin-left: 15px;
+}
+
+.related-post {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.related-author {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  color: #444;
+}
+
+.related-link:link {
+  font-size: 17px;
+  font-weight: bold;
+  font-style: normal;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 75px;
+}
+
+article {
+  flex: 0 0 825px;
+  margin-bottom: 0;
+}
+
+aside {
+  /* 
+  DEFAULTS:
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+   */
+  flex: 0 0 300px;
+}
+
+.related {
+  margin: 0;
+  /* padding: 10px; */
+}
+
+.related-heading {
+  margin: 0;
+}
