@@ -23,9 +23,9 @@ h1 {
   font-style: italic;
 }
 
-article {
+/* article {
   margin-bottom: 40px;
-}
+} */
 
 h2 {
   font-size: 35px;
@@ -76,7 +76,7 @@ li:last-child {
   background-color: #f7f7f7;
   /* background-color: red; */
   padding: 20px 20px;
-  margin-bottom: 60px;
+  /* margin-bottom: 60px; */
   height: auto;
 }
 
@@ -156,14 +156,14 @@ a:active {
 
 button {
   font-size: 22px;
-  padding: 10px;
+  padding: 20px;
   cursor: pointer;
 
   position: absolute;
-  /* top: 60px;
-  left: 100px; */
-  right: 100px;
-  bottom: 60px;
+  /* top: 50px;
+  left: 50px; */
+  bottom: 100px;
+  right: 60px;
 }
 
 nav a:link {
@@ -209,6 +209,8 @@ footer p {
 color: green !important;
 } */
 
+/* FLEXBOX */
+
 .main-header {
   display: flex;
   align-items: center;
@@ -249,7 +251,16 @@ color: green !important;
   margin-bottom: 5px;
 }
 
-.row {
+.related {
+  margin: 0;
+  /* padding: 10px; */
+}
+
+.related-heading {
+  margin: 0;
+}
+
+/* .row {
   display: flex;
   align-items: flex-start;
   gap: 75px;
@@ -261,20 +272,33 @@ article {
 }
 
 aside {
-  /* 
+
   DEFAULTS:
   flex-grow: 0;
   flex-shrink: 1;
   flex-basis: auto;
-   */
+ 
   flex: 0 0 300px;
+} */
+
+/* GRID */
+.container {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  row-gap: 60px;
+  column-gap: 20px;
 }
 
-.related {
-  margin: 0;
-  /* padding: 10px; */
+.main-header {
+  grid-column: 1 / 3;
 }
 
-.related-heading {
-  margin: 0;
+article {
+}
+
+aside {
+}
+
+footer {
+  grid-column: 1 /3;
 }
