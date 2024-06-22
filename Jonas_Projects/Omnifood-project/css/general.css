@@ -66,6 +66,7 @@ html {
   /* font-size: 10px; */
   /* 10px / 16px = 0.625 => 6.25% */
   font-size: 62.5%;
+  overflow-x: hidden;
 }
 
 body {
