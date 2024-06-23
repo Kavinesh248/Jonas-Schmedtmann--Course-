@@ -99,11 +99,16 @@
           </div>
         </div>
         <div class="hero-img-box">
-          <img
-            class="hero-img"
-            src="img/hero.png"
-            alt="woman enjoying eating in a hotel and a collection of food images"
-          />
+          <picture>
+            <source srcset="img/hero.webp" type="image/webp" />
+            <source srcset="img/hero-min.png" type="image/png" />
+
+            <img
+              class="hero-img"
+              src="img/hero-min.webp"
+              alt="woman enjoying eating in a hotel and a collection of food images"
+            />
+          </picture>
         </div>
       </div>
     </section>
