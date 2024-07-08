@@ -41,7 +41,7 @@ ternary operator.
 
 TEST DATA FOR 6: Use players 'Davies', 'Muller',
 'Lewandowski' and 'Kimmich'. Then, call the function
-again with players from game.scorerd
+again with players from game.scored
 GOOD LUCK
  */
 
@@ -80,8 +80,34 @@ const game = {
   scored: ["Lewandowski", "Gnarby", "Lewandowski", "Hummels"],
   date: "Nov 9th, 2037",
   odds: {
-    team1: 1.33,
+    team1: 9.33,
     x: 3.25,
     team2: 6.5,
   },
 };
+
+// 1.
+const [player1, player2] = game.players;
+
+// 2.
+const [gk, ...fieldPlayers] = player1;
+
+// 3.
+const allPlayers = [...player1, ...player2];
+
+// 4.
+const player1Final = [...player1, "Thiago", "Coutinho", "Perisic"];
+
+// 5.
+const { team1, x: draw, team2 } = game.odds;
+console.log(team1, draw, team2);
+
+// 6.
+const printGoals = function (...players) {
+  console.log(`${players.length} goals were scored`);
+};
+printGoals(...game.scored);
+
+// 7.
+const lowerstOdd = team1 < team2 && `Team 1 is more likely to win!`;
+console.log(lowerstOdd);
