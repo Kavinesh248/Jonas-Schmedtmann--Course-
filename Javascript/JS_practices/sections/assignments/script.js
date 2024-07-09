@@ -223,11 +223,12 @@ const books = [
   },
 ];
 
+// Destructuring arrays
 const [firstBook, secondBook] = books;
-console.log(firstBook, secondBook);
+// console.log(firstBook, secondBook);
 
 const [, , thirdBook] = books;
-console.log(thirdBook);
+// console.log(thirdBook);
 
 const ratings = [
   ["rating", 4.19],
@@ -235,8 +236,87 @@ const ratings = [
 ];
 
 const [[, rating], [, ratingsCount]] = ratings;
-console.log(rating, ratingsCount);
+// console.log(rating, ratingsCount);
 
 const ratingStars = [63405, 1808];
 const [fiveStarRatings, oneStarRatings, threeStarRatings = 0] = ratingStars;
-console.log(fiveStarRatings, oneStarRatings, threeStarRatings);
+// console.log(fiveStarRatings, oneStarRatings, threeStarRatings);
+
+// Destructuring objects
+const { title, author, ISBN } = firstBook;
+console.log(title, author, ISBN);
+
+const { keywords: tags } = firstBook;
+console.log(tags);
+
+const { language, programmingLanguage = "unknown" } = books[6];
+console.log(language, programmingLanguage);
+
+let bookTitle = "unknown";
+let bookAuthor = "unknown";
+({ title: bookTitle, author: bookAuthor } = firstBook);
+console.log(bookTitle, bookAuthor);
+
+const {
+  thirdParty: {
+    goodreads: { rating: bookRating },
+  },
+} = books[0];
+console.log(bookRating);
+
+const getYear = function (year) {
+  return year.split("").splice(0, 4).join("");
+};
+
+const printBookInfo = function ({ title, author, publicationDate }) {
+  console.log(`${title} by ${author}, in the year ${getYear(publicationDate)}`);
+};
+printBookInfo({ ...firstBook });
+
+// Spread operator
+const bookAuthors = [...firstBook.author, ...secondBook.author];
+console.log(bookAuthors);
+
+const spellWord = function (string) {
+  console.log(...string);
+};
+spellWord("kavinesh");
+
+// Rest operator
+const [mainKeyword, ...rest] = firstBook.keywords;
+console.log(mainKeyword, rest);
+
+const { publisher: bookPublisher, ...restOfTheBook } = secondBook;
+console.log(bookPublisher, restOfTheBook);
+
+const printBookAuthorsCount = function (title, authors) {
+  console.log(`"The book ${title}" has ${authors.length} authors`);
+};
+printBookAuthorsCount(firstBook.title, firstBook.author);
+
+// Short circuiting
+const hasExamplesInJava = function (books) {
+  console.log(books.programmingLanguage === "Java" || "no data available");
+};
+hasExamplesInJava(books[0]);
+
+for (i = 0; i < books.length; i++) {
+  // books[i].onlineContent &&
+  //   console.log(`"${books[i].title}" provides online content`);
+}
+
+// Nullish coalescing operator
+for (i = 0; i < books.length; i++) {
+  // books[i].onlineContent ??
+  //   console.log(`"${books[i].title}" has no data about its online content`);
+}
+
+// Logical assignment operator
+for (i = 0; i < books.length; i++) {
+  books[i].edition ||= 1;
+}
+
+for (i = 0; i < books.length; i++) {
+  books[i].highlighted &&= !(books[i].thirdParty.goodreads.rating < 4.2);
+  console.log(books[i].highlighted);
+}
