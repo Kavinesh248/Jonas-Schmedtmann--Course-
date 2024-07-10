@@ -320,3 +320,46 @@ for (i = 0; i < books.length; i++) {
   books[i].highlighted &&= !(books[i].thirdParty.goodreads.rating < 4.2);
   console.log(books[i].highlighted);
 }
+
+// Looping arrays: The for-of Loop
+let sumPages = 0;
+for (const { pages } of books) {
+  sumPages += pages;
+}
+console.log(sumPages);
+
+const allAuthors = new Array();
+// My solution
+for (const { author } of books) {
+  if (typeof author === "string") allAuthors.push(author);
+  else allAuthors.push(...author);
+}
+
+// for (const book of books) {
+//   if (typeof book.author === "string") {
+//     allAuthors.push(book.author);
+//   } else {
+//     for (const author of book.author) {
+//       allAuthors.push(author);
+//     }
+//   }
+// }
+// const authorOrder = Object.entries(allAuthors);
+// console.log(allAuthors[0]);
+// console.log(authorOrder[0]);
+
+for (const entry of allAuthors.entries()) {
+  console.log(`${entry + 1}. ${author}`);
+}
+/**
+ Object.entries():
+
+  * Converts an object (including arrays) into an array of key-value pairs.
+  * The keys in the resulting array are strings.
+
+Array.prototype.entries():
+
+  * Returns an iterator for an array that contains key-value pairs.
+  * The keys in these pairs are numbers (the array indices).
+ 
+*/
