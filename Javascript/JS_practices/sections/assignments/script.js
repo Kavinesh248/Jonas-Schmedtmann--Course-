@@ -243,60 +243,60 @@ const [fiveStarRatings, oneStarRatings, threeStarRatings = 0] = ratingStars;
 // console.log(fiveStarRatings, oneStarRatings, threeStarRatings);
 
 // Destructuring objects
-const { title, author, ISBN } = firstBook;
-console.log(title, author, ISBN);
+// const { title, author, ISBN } = firstBook;
+// console.log(title, author, ISBN);
 
 const { keywords: tags } = firstBook;
-console.log(tags);
+// console.log(tags);
 
 const { language, programmingLanguage = "unknown" } = books[6];
-console.log(language, programmingLanguage);
+// console.log(language, programmingLanguage);
 
 let bookTitle = "unknown";
 let bookAuthor = "unknown";
 ({ title: bookTitle, author: bookAuthor } = firstBook);
-console.log(bookTitle, bookAuthor);
+// console.log(bookTitle, bookAuthor);
 
 const {
   thirdParty: {
     goodreads: { rating: bookRating },
   },
 } = books[0];
-console.log(bookRating);
+// console.log(bookRating);
 
 const getYear = function (year) {
   return year.split("").splice(0, 4).join("");
 };
 
 const printBookInfo = function ({ title, author, publicationDate }) {
-  console.log(`${title} by ${author}, in the year ${getYear(publicationDate)}`);
+  // console.log(`${title} by ${author}, in the year ${getYear(publicationDate)}`);
 };
 printBookInfo({ ...firstBook });
 
 // Spread operator
 const bookAuthors = [...firstBook.author, ...secondBook.author];
-console.log(bookAuthors);
+// console.log(bookAuthors);
 
 const spellWord = function (string) {
-  console.log(...string);
+  // console.log(...string);
 };
 spellWord("kavinesh");
 
 // Rest operator
 const [mainKeyword, ...rest] = firstBook.keywords;
-console.log(mainKeyword, rest);
+// console.log(mainKeyword, rest);
 
 const { publisher: bookPublisher, ...restOfTheBook } = secondBook;
-console.log(bookPublisher, restOfTheBook);
+// console.log(bookPublisher, restOfTheBook);
 
 const printBookAuthorsCount = function (title, authors) {
-  console.log(`"The book ${title}" has ${authors.length} authors`);
+  // console.log(`"The book ${title}" has ${authors.length} authors`);
 };
 printBookAuthorsCount(firstBook.title, firstBook.author);
 
 // Short circuiting
 const hasExamplesInJava = function (books) {
-  console.log(books.programmingLanguage === "Java" || "no data available");
+  // console.log(books.programmingLanguage === "Java" || "no data available");
 };
 hasExamplesInJava(books[0]);
 
@@ -318,7 +318,7 @@ for (i = 0; i < books.length; i++) {
 
 for (i = 0; i < books.length; i++) {
   books[i].highlighted &&= !(books[i].thirdParty.goodreads.rating < 4.2);
-  console.log(books[i].highlighted);
+  // console.log(books[i].highlighted);
 }
 
 // Looping arrays: The for-of Loop
@@ -326,7 +326,7 @@ let sumPages = 0;
 for (const { pages } of books) {
   sumPages += pages;
 }
-console.log(sumPages);
+// console.log(sumPages);
 
 const allAuthors = new Array();
 // My solution
@@ -345,11 +345,11 @@ for (const { author } of books) {
 //   }
 // }
 // const authorOrder = Object.entries(allAuthors);
-// console.log(allAuthors[0]);
+// console.log(allAuthors);
 // console.log(authorOrder[0]);
 
 for (const entry of allAuthors.entries()) {
-  console.log(`${entry + 1}. ${author}`);
+  // console.log(`${entry + 1}. ${author}`);
 }
 /**
  Object.entries():
@@ -363,3 +363,39 @@ Array.prototype.entries():
   * The keys in these pairs are numbers (the array indices).
  
 */
+
+// Enhanced Object Literals
+const bookData = [
+  ["title", "Computer Networking: A Top-Down Approach"],
+  ["author", ["James F. Kurose", "Keith W. Ross"]],
+  ["publisher", "Addison Wesley"],
+];
+
+const [title, author, publisher] = bookData;
+
+const newBook = {
+  [title[0]]: title[1],
+  [author[0]]: author[1],
+  [publisher[0]]: publisher[1],
+};
+// const newBook = {};
+// bookData.forEach(function ([key, value]) {
+//   console.log(key, value);
+//   // newBook[key] = value;
+// });
+
+const pages = 880;
+
+const newBook2 = {
+  title: "The C Programming Language",
+  author: ["Brian W. Kernighan", "Dennis M. Ritchie"],
+  pages,
+};
+
+console.log(newBook);
+
+const getFirstKeyword = function (book) {
+  const keyword = book.keywords?.[0];
+  console.log(keyword);
+};
+getFirstKeyword(books[0]);
