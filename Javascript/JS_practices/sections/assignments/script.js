@@ -392,10 +392,171 @@ const newBook2 = {
   pages,
 };
 
-console.log(newBook);
+// console.log(newBook);
 
 const getFirstKeyword = function (book) {
   const keyword = book.keywords?.[0];
-  console.log(keyword);
+  // console.log(keyword);
 };
 getFirstKeyword(books[0]);
+
+// console.log(firstBook);
+
+// Looping arrarys, entries, keys, values
+const entries = [];
+
+for (const key of Object.keys(books[0].thirdParty.goodreads)) {
+  entries.push([key]);
+}
+
+for (const [index, value] of Object.values(
+  books[0].thirdParty.goodreads
+).entries()) {
+  entries[index].push(value);
+}
+// console.log(entries);
+
+const entries2 = Object.entries(books[0].thirdParty.goodreads);
+// console.log(entries2);
+
+// Sets
+const allKeywords = [];
+
+for (const { keywords } of books) {
+  allKeywords.push(...keywords);
+}
+// console.log(allKeywords);
+
+const uniqueKeywords = new Set(allKeywords);
+uniqueKeywords.add("coding").add("science");
+uniqueKeywords.delete("business");
+
+const uniqueKeywordsArr = [...uniqueKeywords];
+uniqueKeywords.clear();
+// console.log(uniqueKeywords);
+
+// Maps Fundamentals
+
+const bookMap = new Map([
+  ["title", "Clean Code"],
+  ["author", "Robert C. Martin"],
+]);
+bookMap.set("pages", 464);
+
+// console.log(`${bookMap.get("title")} by ${bookMap.get("author")}`);
+
+// console.log(bookMap.size);
+
+if (bookMap.has("author")) {
+  // console.log("The author of the book is known");
+}
+
+// Maps: Iteration
+const firstBookMap = new Map(Object.entries(books[0]));
+// console.log(firstBookMap);
+
+// console.log(Object.entries(books[0]));
+
+for (const [key, value] of firstBookMap) {
+  // if (typeof value === "number") console.log(key);
+}
+
+// Working with strings
+
+const isbn = books[0].ISBN;
+// console.log(isbn[6], isbn[4], isbn[9], isbn[8]);
+
+const quote =
+  "A computer once beat me at chess, but it was no match for me at kick boxing";
+// console.log(quote.indexOf("chess"));
+
+// console.log(quote.slice(-6));
+
+// const isContributor = function (author) {
+//   if (author.includes("contributor")) {
+// console.log(author);
+//   }
+// };
+
+function isContributor(author) {
+  return author.lastIndexOf("(Contributor)") !== -1;
+}
+// console.log(isContributor("Julie Calismen (Contributor)"));
+
+const normalizeAuthorName = function (author) {
+  author = author.trim();
+  const firstName = author.slice(0, author.indexOf(" "));
+
+  let lastName = "";
+  if (author.indexOf(" ") === author.lastIndexOf(" ")) {
+    lastName = author.slice(author.indexOf(" ") + 1, author.length);
+  } else {
+    lastName = author.slice(author.indexOf(" ") + 1, author.lastIndexOf(" "));
+  }
+
+  const authorFirstName =
+    firstName[0].toUpperCase() + firstName.slice(1).toLowerCase();
+  const authorLastName =
+    lastName[0].toUpperCase() + lastName.slice(1).toLowerCase();
+
+  // console.log(authorFirstName, authorLastName);
+};
+
+normalizeAuthorName("kaviNeSH SussMan (Contributor)");
+
+// console.log(books[1].title.replace("Programs", "Software"));
+
+const logBookTheme = function (book) {
+  if (book.startsWith("Computer")) {
+    console.log(`This book is about computers`);
+  } else if (book.includes("algoriths") && book.includes("structures")) {
+    console.log(`This book is about algorithms and data structures`);
+  } else if (
+    (book.endsWith("system") || book.endsWith("systems")) &&
+    !title.includes("operating")
+  ) {
+    console.log(
+      "This book is about some systems, but definitely not about operating systems"
+    );
+  }
+};
+
+logBookTheme("some of the book operating and system");
+
+const bookCategories =
+  "science;computing;computer science;algorithms;business;operating systems;networking;electronics";
+const logBookCategories = function (bookCategory) {
+  // return bookCategory.replaceAll(";", " ").replaceAll(" ", "\n");
+  const category = bookCategory.split(";");
+  console.log(category);
+  for (const book of category) {
+    console.log(book);
+  }
+};
+logBookCategories(bookCategories);
+
+const getKeywordsAsStrings = function (books) {
+  const keywords = [];
+  for (const book of books) {
+    keywords.push(...book.keywords);
+  }
+  const unique = [...new Set(keywords)];
+  return unique.join(";");
+};
+
+console.log(getKeywordsAsStrings(books));
+
+const bookChapters = [
+  ["The Basics", 14],
+  ["Sorting", 254],
+  ["Searching", 372],
+  ["Graphs", 526],
+  ["Strings", 706],
+];
+
+const logBookChapters = function (chapter) {
+  for (const [title, page] of chapter) {
+    console.log(`${title.padEnd(20, "_")} ${page}`);
+  }
+};
+logBookChapters(bookChapters);
