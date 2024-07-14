@@ -1,4 +1,6 @@
+"use strict";
 /*
+Challenge 1
 
   Let's build a simple poll app!
 
@@ -51,6 +53,8 @@
 
 */
 
+const script = "Declarative Environement Record";
+
 const poll = {
   question: "What is your favourite programming language?",
   options: ["0: Javascript", "1: Python", "2: Rust", "3: C++"],
@@ -64,7 +68,7 @@ const poll = {
       this.answers[userPrompt]++;
       console.log(this.answers);
     }
-    this.displayResults(["kavinesh"]);
+    this.displayResults();
     this.displayResults("string");
   },
 
@@ -76,7 +80,52 @@ const poll = {
     }
   },
 };
+console.dir(poll.registerNewAnswer);
 const answerPoll = poll.registerNewAnswer;
 document
   .querySelector(".poll")
   .addEventListener("click", answerPoll.bind(poll));
+
+/*
+
+  This is more of a thinking challenge 
+  than a coding challenge 🧐
+
+
+  Take the IIFE below and at the end of the function, 
+  attach an event listener than changes the color 
+  of the selected h1 element ('header') to blue, 
+  each time the BODY element is clicked. 
+  Do NOT select the h1 element again!
+
+  And now explain to YOURSELF (or someone around you) WHY this worked!
+  Take all the time you need. Think about WHEN exactly the 
+  callback function is executed, and what that means for the 
+  variables involved in this example.
+
+  GOOD LUCK 🎉
+
+*/
+
+(function () {
+  const header = document.querySelector("h1");
+  header.style.color = "red";
+
+  // This is because of closure
+  document.querySelector("body").addEventListener("click", function () {
+    header.style.color = "blue";
+  });
+})();
+
+/*
+The "object Environment Record" is the record 
+that uses the properties of the global object 
+for the var-scoped bindings.
+ This is what V8 calls Global under [[Scopes]].
+
+ 
+The "declarative Environment Record"
+ is the record that holds the lexically-scoped 
+ bindings (directly, not in a separate object).
+  This is what V8 calls Script under [[Scopes]]
+*/
