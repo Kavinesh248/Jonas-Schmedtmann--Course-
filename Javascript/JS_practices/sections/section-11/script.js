@@ -246,3 +246,54 @@ btnSort.addEventListener('click', function (e) {
 
 // movements.sort((a, b) => a - b);
 // console.log(movements);
+
+// Array methods practice
+
+// 1.
+const bankDespositSum = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov > 0)
+  .reduce((acc, cur) => acc + cur);
+
+console.log(bankDespositSum);
+
+// 2.
+const numDeposits1000 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((count, cur) => (cur >= 1000 ? count++ : count), 0);
+
+console.log(numDeposits1000);
+
+// 3.
+const sums = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (acc, cur) => {
+      // cur > 0 ? (acc.deposits += cur) : (acc.withdrawals += cur);
+      acc[cur > 0 ? 'deposits' : 'withdrawals'] += cur;
+      return acc;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+
+console.log(sums);
+
+// 4.
+// this is a nice title => This Is a Nice Title
+const convertTitleCase = function (title) {
+  const exceptions = ['a', 'an', 'the', 'and', 'but', 'or', 'on', 'in', 'with'];
+  const capitalize = str => str[0].toUpperCase() + str.slice(1);
+
+  const titleCase = title
+    .toLowerCase()
+    .split(' ')
+    .map(word =>
+      exceptions.includes(word) ? word : word[0].toUpperCase() + word.slice(1)
+    )
+    .join(' ');
+  return capitalize(titleCase);
+};
+
+console.log(convertTitleCase('this is a nice title'));
+console.log(convertTitleCase('this is a LONG title but not too long'));
+console.log(convertTitleCase('and here is another title with an EXAMPLE'));
