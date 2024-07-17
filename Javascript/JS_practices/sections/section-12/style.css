@@ -295,3 +295,122 @@ h2 {
 .timer {
   font-weight: 600;
 }
+
+@media (max-width: 730px) {
+  html {
+    font-size: 56.25%;
+  }
+
+  nav {
+    padding: 0;
+  }
+
+  .app {
+    position: relative;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .movements {
+    grid-column: 1 / span 3;
+  }
+
+  .operation {
+    padding: 1.6rem 2.4rem;
+  }
+
+  .operation--transfer {
+    grid-column: 1;
+    grid-row: 5;
+  }
+
+  .operation--loan {
+    grid-column: 2;
+    grid-row: 5;
+  }
+
+  .operation--close {
+    grid-column: 3;
+    grid-row: 5;
+  }
+
+  .summary {
+    align-items: center;
+    grid-column: 1 / span 2;
+    grid-row: 6;
+    margin-top: 0;
+  }
+
+  .balance {
+    grid-column: 1 / span 3;
+  }
+
+  .balance__value {
+    font-size: 3.6rem;
+  }
+
+  .logout-timer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  html {
+    font-size: 50%;
+  }
+
+  .operation {
+    padding: 1rem 2rem;
+  }
+
+  .logout-timer {
+    position: absolute;
+    right: 0;
+    top: 4.6rem;
+  }
+
+  .summary {
+    grid-column: 1 / span 3;
+  }
+}
+
+@media (max-width: 455px) {
+  html {
+    font-size: 43.75%;
+  }
+
+  .operation {
+    padding: 1rem 1.4rem;
+  }
+
+  .balance {
+    align-items: center;
+  }
+
+  .balance__value {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 395px) {
+  .operation {
+    padding: 1rem 0.8rem;
+  }
+
+  .form__input--loan-amount {
+    grid-column: 1 / span 2;
+  }
+
+  .summary {
+    padding: 0;
+    position: relative;
+  }
+
+  .btn--sort {
+    position: absolute;
+    right: 1rem;
+    bottom: -2rem;
+    font-size: 1.6rem;
+  }
+}
