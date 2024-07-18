@@ -7,7 +7,7 @@ const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
-const header = document.querySelector('header');
+const header = document.querySelector('.header');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 const nav = document.querySelector('.nav');
@@ -60,6 +60,7 @@ tabsContainer.forEach(tab => {
   tab.addEventListener('click', e => {
     const clicked = e.target.closest('.operations__tab');
 
+    // guard clause
     if (!clicked) return;
 
     // Removinig active classes before adding the classes
@@ -98,65 +99,72 @@ nav.addEventListener('mouseover', animateMenu.bind(0.5));
 nav.addEventListener('mouseout', animateMenu.bind(1));
 
 // Sticky navigation
-window.addEventListener('scroll', function (e) {
-  console.log(window.scrollY);
+// const initialCoords = section1.getBoundingClientRect();
+// window.addEventListener('scroll', function (e) {
+//   if (this.window.scrollY > initialCoords.top) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// });
+
+// A better way: Intersection Observer API
+const navHeight = nav.getBoundingClientRect().height;
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+headerObserver.observe(header);
+
+// Revealing elements
+const allSections = document.querySelectorAll('section');
+
+const showSection = function (entries, observer) {
+  const [entry] = entries;
+
+  // guard clause
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(showSection, {
+  root: null,
+  threshold: 0.15,
 });
 
-//////////////////////////////////////////
-/////LECTURES
-//////////////////////////////////////////
+allSections.forEach(section => {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
 
-// console.log(getComputedStyle(message).width);
+// Lazy loading images
+const imgTargets = document.querySelectorAll('img[data-src]');
 
-// // document.documentElement.style.setProperty('--color-primary', 'orangered');
+const lazyLoad = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
 
-// // Attributes
-// const logo = document.querySelector('.nav__logo');
-// console.log(logo.alt);
-// console.log(logo.src);
-// console.log(logo.className);
+  if (!entry.isIntersecting) return;
 
-// logo.alt = 'Beautiful minimalist logo';
+  entry.target.src = entry.target.dataset.src;
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
 
-// // Non-standard
-// logo.setAttribute('designer', 'jonas');
-// console.log(logo.designer); //undefined - because it's not standard
+  observer.unobserve(entry.target);
+};
 
-// console.log(logo.getAttribute('src'));
+const imgObserver = new IntersectionObserver(lazyLoad, {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px',
+});
 
-// // Data attributes
-// logo.setAttribute('data-version-number', 3.0);
-// console.log(logo.dataset.versionNumber);
-
-// const message = document.createElement('div');
-// message.classList.add('cookie-message');
-// message.innerHTML =
-//   'We use cookies to collect and analyse information on site performance and usage, <button class="btn btn--close-cookie">Allow all cookies</button>';
-// header.append(message);
-
-// document
-//   .querySelector('.btn--close-cookie')
-//   .addEventListener('click', function () {
-//     // message.remove();
-//     message.parentElement.removeChild(message);
-//   });
-
-// const randomInt = (min, max) =>
-//   Math.floor(Math.random() * (max - min + 1) + min);
-
-// const randomColor = () =>
-//   `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
-
-// document.querySelector('.nav__link').addEventListener('click', function (e) {
-//   e.preventDefault();
-//   this.style.backgroundColor = randomColor();
-// });
-
-// document.querySelector('.nav__links').addEventListener('click', function (e) {
-//   e.preventDefault();
-//   this.style.backgroundColor = randomColor();
-// });
-
-// const h1 = document.querySelector('h1');
-
-// h1.closest('.header__title').style.background = 'var(--gradient-secondary)';
+imgTargets.forEach(img => {
+  imgObserver.observe(img);
+});
