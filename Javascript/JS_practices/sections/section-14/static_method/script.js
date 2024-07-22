@@ -20,7 +20,7 @@ class PersonCl {
   }
 }
 
-const jessica = new PersonCl("Jessica", 1996);
+const jessica = new PersonCl("Jessica Davis", 1996);
 // jessica.fullName = "Jessica Davis";
 console.log(jessica);
 
@@ -38,6 +38,10 @@ const account = {
     this.movements.push(mov);
   },
 };
+
+PersonCl.prototype.some = "Kavinesh";
+
+console.log(jessica.some);
 
 console.log(account.latest);
 account.latest = 50;
