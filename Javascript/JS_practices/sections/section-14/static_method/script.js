@@ -39,7 +39,7 @@ const account = {
   },
 };
 
-PersonCl.prototype.some = "Kavinesh";
+PersonCl.some = "Kavinesh";
 
 console.log(jessica.some);
 
