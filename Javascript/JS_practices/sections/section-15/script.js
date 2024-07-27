@@ -82,8 +82,6 @@ class App {
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleElevationField);
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
-
-    this._editWorkout();
   }
 
   _getPosition() {
@@ -197,6 +195,8 @@ class App {
 
     // store the data in local storage
     this._setLocalStorage();
+
+    console.log(this.#workouts);
   }
 
   _renderWorkoutMarker(workout) {
@@ -267,36 +267,6 @@ class App {
     `;
 
     form.insertAdjacentHTML('afterend', html);
-  }
-
-  _editWorkout() {
-    document.addEventListener('DOMContentLoaded', function () {
-      const editButton = document.querySelector('.btn_edit');
-
-      if (!editButton) {
-        return;
-      }
-
-      editButton.addEventListener('click', function (e) {
-        const editData = prompt(
-          'Which one you want to edit? Just give the number \n 1. Distance \n 2. Duration \n 3. Cadence'
-        );
-
-        const editMap = {
-          1: 'distance',
-          2: 'duration',
-          3: 'cadence',
-        };
-
-        if (editMap[editData]) {
-          const data = prompt('You can edit the data!');
-          const target = e.target
-            .closest('.workout')
-            .querySelector(`#${editMap[editData]}`);
-          target.querySelector('.workout__value').textContent = data;
-        }
-      });
-    });
   }
 
   _moveToPopup(e) {
