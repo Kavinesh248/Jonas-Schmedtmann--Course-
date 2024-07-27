@@ -82,6 +82,8 @@ class App {
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleElevationField);
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+
+    this._editWorkout();
   }
 
   _getPosition() {
@@ -219,6 +221,7 @@ class App {
     let html = `
        <li class="workout workout--${workout.type}" data-id="${workout.id}">
         <h2 class="workout__title">Running on April 14</h2>
+        <button class="btn_edit" data-id="${workout.id}">Edit</button>
         <div class="workout__details">
           <span class="workout__icon">${
             workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'
@@ -266,6 +269,22 @@ class App {
     form.insertAdjacentHTML('afterend', html);
   }
 
+  _editWorkout() {
+    if (!document.querySelector('.btn')) {
+      return;
+    } else {
+      document
+        .querySelector('.btn_edit')
+        .addEventListener('click', function (e) {
+          const editData = prompt(
+            'Which one you want to edit? \n 1. Distance \n 2. Duration \n 3. Cadence'
+          );
+
+          console.log(e.target);
+        });
+    }
+  }
+
   _moveToPopup(e) {
     const workoutEl = e.target.closest('.workout');
 
@@ -274,7 +293,6 @@ class App {
     const workout = this.#workouts.find(
       work => work.id === workoutEl.dataset.id
     );
-    console.log(workout);
 
     this.#map.setView(workout.coords, this.#mapView, {
       animate: true,
