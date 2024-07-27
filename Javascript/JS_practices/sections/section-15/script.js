@@ -1,8 +1,5 @@
 'use strict';
 
-// prettier-ignore
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
 const form = document.querySelector('.form');
 const containerWorkouts = document.querySelector('.workouts');
 const inputType = document.querySelector('.form__input--type');
@@ -14,10 +11,23 @@ const inputElevation = document.querySelector('.form__input--elevation');
 class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10);
+  clicks = 0;
   constructor(coords, distance, duration) {
     this.coords = coords;
     this.distance = distance;
     this.duration = duration;
+  }
+
+  _setDescription() {
+    // prettier-ignore
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${
+      months[this.date.getMonth()]
+    } ${this.date.getDate()}`;
+  }
+
+  click() {
+    this.clicks++;
   }
 }
 
@@ -27,6 +37,7 @@ class Running extends Workout {
     super(coords, distance, duration);
     this.cadence = cadence;
     this._calcPace();
+    this._setDescription();
   }
 
   _calcPace() {
@@ -41,6 +52,7 @@ class Cycling extends Workout {
     super(coords, distance, duration);
     this.elevationGain = elevationGain;
     this._calcSpeed();
+    this._setDescription();
   }
 
   _calcSpeed() {
@@ -56,12 +68,20 @@ class Cycling extends Workout {
 class App {
   #map;
   #mapEvent;
+  #mapView = 13;
   #workouts = [];
 
   constructor() {
+    // Getting the currren position
     this._getPosition();
+
+    // Getting the data from local storage
+    this._getLocalStorage();
+
+    // event handlings
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleElevationField);
+    containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
   }
 
   _getPosition() {
@@ -80,7 +100,7 @@ class App {
 
     const coords = [latitude, longitude];
 
-    this.#map = L.map('map').setView(coords, 13);
+    this.#map = L.map('map').setView(coords, this.#mapView);
 
     L.tileLayer('https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution:
@@ -88,6 +108,10 @@ class App {
     }).addTo(this.#map);
 
     this.#map.on('click', this._showForm.bind(this));
+
+    this.#workouts.forEach(work => {
+      this._renderWorkoutMarker(work);
+    });
   }
 
   _showForm(mapEv) {
@@ -168,10 +192,12 @@ class App {
 
     // Hide form + clear input fields
     this._hideForm();
+
+    // store the data in local storage
+    this._setLocalStorage();
   }
 
   _renderWorkoutMarker(workout) {
-    console.log(workout);
     L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
@@ -183,7 +209,9 @@ class App {
           className: `${workout.type}-popup`,
         })
       )
-      .setPopupContent('Workout')
+      .setPopupContent(
+        `${workout.description} ${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'}`
+      )
       .openPopup();
   }
 
@@ -237,6 +265,63 @@ class App {
 
     form.insertAdjacentHTML('afterend', html);
   }
+
+  _moveToPopup(e) {
+    const workoutEl = e.target.closest('.workout');
+
+    if (!workoutEl) return;
+
+    const workout = this.#workouts.find(
+      work => work.id === workoutEl.dataset.id
+    );
+    console.log(workout);
+
+    this.#map.setView(workout.coords, this.#mapView, {
+      animate: true,
+      pan: {
+        duration: 1,
+      },
+    });
+
+    // workout.click();
+  }
+
+  _setLocalStorage() {
+    localStorage.setItem('workouts', JSON.stringify(this.#workouts));
+  }
+
+  _getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem('workouts'));
+
+    if (!data) return;
+
+    this.#workouts = data;
+    this.#workouts.forEach(work => {
+      this._renderWorkout(work);
+
+      // Will get a error : Because the map is doesn't loaded yet so when we add a marker before it will
+      // throw a error
+      // this._renderWorkoutMarket(work)
+    });
+  }
+
+  _reset() {
+    localStorage.removeItem('workouts');
+    location.reload();
+  }
 }
 
 const app = new App();
+
+/*
+
+    Use of the click function on this code:
+
+    Actually when we save the the workout object as a string  in the local storage 
+    the prototype chain will get broke as soon as we changed it as a string and then converts the string
+    into an object.. 
+    After the recieved data gets loaded when we can't able to use any methods that was 
+    defined in the parent class or any other.. 
+    
+
+*/
