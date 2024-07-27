@@ -222,14 +222,14 @@ class App {
        <li class="workout workout--${workout.type}" data-id="${workout.id}">
         <h2 class="workout__title">Running on April 14</h2>
         <button class="btn_edit" data-id="${workout.id}">Edit</button>
-        <div class="workout__details">
+        <div class="workout__details" id="distance">
           <span class="workout__icon">${
             workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'
           }</span>
           <span class="workout__value">${workout.distance}</span>
           <span class="workout__unit">km</span>
         </div>
-        <div class="workout__details">
+        <div class="workout__details" id="duration">
           <span class="workout__icon">⏱</span>
           <span class="workout__value">${workout.duration}</span>
           <span class="workout__unit">min</span>
@@ -243,7 +243,7 @@ class App {
             <span class="workout__value">${workout.pace.toFixed(1)}</span>
             <span class="workout__unit">min/km</span>
           </div>
-          <div class="workout__details">
+          <div class="workout__details" id="cadence">
             <span class="workout__icon">🦶🏼</span>
             <span class="workout__value">${workout.cadence}</span>
             <span class="workout__unit">spm</span>
@@ -258,7 +258,7 @@ class App {
             <span class="workout__value">${workout.speed.toFixed(1)}</span>
             <span class="workout__unit">km/h</span>
           </div>
-          <div class="workout__details">
+          <div class="workout__details" id="elevationGain">
             <span class="workout__icon">⛰</span>
             <span class="workout__value">${workout.elevationGain}</span>
             <span class="workout__unit">m</span>
@@ -270,19 +270,33 @@ class App {
   }
 
   _editWorkout() {
-    if (!document.querySelector('.btn')) {
-      return;
-    } else {
-      document
-        .querySelector('.btn_edit')
-        .addEventListener('click', function (e) {
-          const editData = prompt(
-            'Which one you want to edit? \n 1. Distance \n 2. Duration \n 3. Cadence'
-          );
+    document.addEventListener('DOMContentLoaded', function () {
+      const editButton = document.querySelector('.btn_edit');
 
-          console.log(e.target);
-        });
-    }
+      if (!editButton) {
+        return;
+      }
+
+      editButton.addEventListener('click', function (e) {
+        const editData = prompt(
+          'Which one you want to edit? Just give the number \n 1. Distance \n 2. Duration \n 3. Cadence'
+        );
+
+        const editMap = {
+          1: 'distance',
+          2: 'duration',
+          3: 'cadence',
+        };
+
+        if (editMap[editData]) {
+          const data = prompt('You can edit the data!');
+          const target = e.target
+            .closest('.workout')
+            .querySelector(`#${editMap[editData]}`);
+          target.querySelector('.workout__value').textContent = data;
+        }
+      });
+    });
   }
 
   _moveToPopup(e) {
