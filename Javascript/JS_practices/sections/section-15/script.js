@@ -82,6 +82,8 @@ class App {
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleElevationField);
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+
+    this._editWorkout();
   }
 
   _getPosition() {
@@ -136,8 +138,8 @@ class App {
   }
 
   _toggleElevationField() {
-    inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
-    inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
+    inputElevation.closest('.form_row').classList.toggle('form_row--hidden');
+    inputCadence.closest('.form_row').classList.toggle('form_row--hidden');
   }
 
   _newWorkout(e) {
@@ -194,9 +196,11 @@ class App {
     this._hideForm();
 
     // store the data in local storage
-    this._setLocalStorage();
+    this._setLocalStorage(this.#workouts);
 
-    console.log(this.#workouts);
+    document
+      .querySelector('.btn_edit')
+      .addEventListener('click', this._editWorkout.bind(this, workout));
   }
 
   _renderWorkoutMarker(workout) {
@@ -212,7 +216,7 @@ class App {
         })
       )
       .setPopupContent(
-        `${workout.description} ${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'}`
+        `${workout.description} ${workout.type === 'running' ? '🏃‍♂' : '🚴‍♀'}`
       )
       .openPopup();
   }
@@ -224,7 +228,7 @@ class App {
         <button class="btn_edit" data-id="${workout.id}">Edit</button>
         <div class="workout__details" id="distance">
           <span class="workout__icon">${
-            workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'
+            workout.type === 'running' ? '🏃‍♂' : '🚴‍♀'
           }</span>
           <span class="workout__value">${workout.distance}</span>
           <span class="workout__unit">km</span>
@@ -239,7 +243,7 @@ class App {
     if (workout.type === 'running')
       html += `
         <div class="workout__details">
-            <span class="workout__icon">⚡️</span>
+            <span class="workout__icon">⚡</span>
             <span class="workout__value">${workout.pace.toFixed(1)}</span>
             <span class="workout__unit">min/km</span>
           </div>
@@ -254,7 +258,7 @@ class App {
     if (workout.type === 'cycling')
       html += `
        <div class="workout__details">
-            <span class="workout__icon">⚡️</span>
+            <span class="workout__icon">⚡</span>
             <span class="workout__value">${workout.speed.toFixed(1)}</span>
             <span class="workout__unit">km/h</span>
           </div>
@@ -284,12 +288,13 @@ class App {
         duration: 1,
       },
     });
+    // this.#workouts.forEach(work => console.log(work));
 
     // workout.click();
   }
 
-  _setLocalStorage() {
-    localStorage.setItem('workouts', JSON.stringify(this.#workouts));
+  _setLocalStorage(workout) {
+    localStorage.setItem('workouts', JSON.stringify(workout));
   }
 
   _getLocalStorage() {
@@ -304,6 +309,41 @@ class App {
       // Will get a error : Because the map is doesn't loaded yet so when we add a marker before it will
       // throw a error
       // this._renderWorkoutMarket(work)
+    });
+  }
+
+  _editWorkout(workout) {
+    const editBtns = document.querySelectorAll('.btn_edit');
+
+    if (!editBtns) return;
+
+    editBtns.forEach(btn => {
+      btn.addEventListener('click', e => {
+        const editData = prompt(
+          'Which one you want to edit? \n 1. Distance \n 2. Duration \n 3. Cadence'
+        );
+
+        const editMap = {
+          1: 'distance',
+          2: 'duration',
+          3: 'cadence',
+        };
+
+        if (editMap[editData]) {
+          const data = prompt('You can edit the data!');
+
+          if (!workout) return;
+          editMap[editData] === 'distance' ? (workout.distance = +data) : false;
+          editMap[editData] === 'duration' ? (workout.duration = +data) : false;
+          editMap[editData] === 'cadence' ? (workout.cadence = +data) : false;
+
+          this.#workouts.push(workout);
+          const unique = [...new Set(this.#workouts)];
+          this._setLocalStorage(unique);
+        } else {
+          alert('Invalid selection. Please enter 1, 2, or 3.');
+        }
+      });
     });
   }
 
