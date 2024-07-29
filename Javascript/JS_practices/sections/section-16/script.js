@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 //https://countries-api-836d.onrender.com/countries/
 // https://restcountries.com/v2/name/portugal
 
-const btn = document.querySelector('.btn-country');
-const countriesContainer = document.querySelector('.countries');
+const btn = document.querySelector(".btn-country");
+const countriesContainer = document.querySelector(".countries");
 
 const renderCountry = function (data, className) {
   const html = `
@@ -22,9 +22,33 @@ const renderCountry = function (data, className) {
           </div>
       </article>
       `;
-  countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
+  countriesContainer.insertAdjacentHTML("beforeend", html);
 };
+
+// Chaining methods and error handling
+const getCountryData = function (country) {
+  fetch(`https://restcountries.com/v2/name/${country}`)
+    .then((response) => response.json())
+    .then((data) => {
+      renderCountry(data[0]);
+
+      const neighbour = data[0].borders?.[0];
+      if (!neighbour) return;
+
+      // Country 2
+      return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
+    })
+    .then((res) => res.json())
+    .then((data) => renderCountry(data, "neighbour"))
+    .catch((err) => {
+      console.error(`${err} 🔴🔴🔴`);
+    })
+    .finally(() => (countriesContainer.style.opacity = 1));
+};
+
+btn.addEventListener("click", function () {
+  getCountryData("portugal");
+});
 
 // const getCountries = function (country) {
 //   // First AJAX Call
@@ -63,23 +87,3 @@ const renderCountry = function (data, className) {
 // };
 
 // getCountryData('portugal');
-
-// Chaining methods
-const getCountryData = function (country) {
-  fetch(`https://restcountries.com/v2/name/${country}`)
-    .then(response => {
-      console.log(response);
-      return response.json();
-    })
-    .then(data => {
-      renderCountry(data[0]);
-
-      const neighbour = data[0].borders?.[0];
-      if (!neighbour) return;
-
-      // Country 2
-      return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
-    });
-};
-
-getCountryData('portugal');
