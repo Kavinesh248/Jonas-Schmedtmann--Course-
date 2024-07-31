@@ -210,7 +210,7 @@ let currentImg;
   1. Create an async function 'loadAll' that
    receives an array of image path
   'imgArr' 
-  2. Use .map to loop over the arrya, to all the images wit the
+  2. Use .map to loop over the array, to all the images with the
   'createImage' function (call the resulting array 'imgs')
   3. Check out the 'imgs' array in the console! Is it like you 
   expected?
@@ -249,4 +249,15 @@ const loadNPause = async function () {
   }
 };
 
-loadNPause();
+// loadNPause();
+
+const loadAll = async function (imgArr) {
+  try {
+    const imgs = imgArr.map(async (img) => await createImage(img));
+    const imgEl = await Promise.all(imgs);
+    imgEl.forEach((img) => img.classList.add("parallel"));
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+loadAll(["img/img-1.jpg", "img/img-2.jpg", "img/img-3.jpg"]);
