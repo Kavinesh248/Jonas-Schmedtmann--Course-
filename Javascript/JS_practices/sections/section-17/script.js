@@ -6,7 +6,7 @@
 // addToCart('bread', 5);
 // console.log(price, tq);
 
-console.log('Importing module');
+console.log("Importing module");
 // console.log(shippingCost);
 
 // import * as ShoppingCart from './shoppingCart.js';
@@ -16,10 +16,10 @@ console.log('Importing module');
 // import add, { addToCart, totalPrice as price, tq } from './shoppingCart.js';
 // console.log(price);
 
-import add, { cart } from './shoppingCart.js';
-add('pizza', 2);
-add('bread', 5);
-add('apples', 4);
+import add, { cart } from "./shoppingCart.js";
+add("pizza", 2);
+add("bread", 5);
+add("apples", 4);
 
 console.log(cart);
 
@@ -76,16 +76,16 @@ const shoppingCart2 = (function () {
   };
 })();
 
-shoppingCart2.addToCart('apple', 2);
+shoppingCart2.addToCart("apple", 2);
 console.log(shoppingCart2);
 // console.log(shoppingCart2.shippingCost);
 
-import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+import cloneDeep from "lodash-es";
 
 const obj = {
   cart: [
-    { product: 'pizza', quantity: 8 },
-    { product: 'orange', quantity: 3 },
+    { product: "pizza", quantity: 8 },
+    { product: "orange", quantity: 3 },
   ],
   user: {
     isLoggedIn: true,
@@ -97,6 +97,13 @@ const obj = {
 const copiedNObj = Object.assign({}, obj);
 const copiedNObj2 = cloneDeep(obj);
 copiedNObj.user.isLoggedIn = false;
-console.log(copiedNObj, obj);
+// console.log(copiedNObj, obj);
 
 console.log(copiedNObj2);
+
+if (module.hot) {
+  module.hot.accept();
+}
+
+import "core-js/stable";
+import "regenerator-runtime/runtime";
