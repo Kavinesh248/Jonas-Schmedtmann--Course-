@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  height: 100vh;
+}
+
+.flashcards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.4rem;
+
+  margin: 2.4rem;
+}
+
+.flashcards div {
+  height: 30rem;
+  padding: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f1f1;
+  border: 1px solid #000;
+  border-radius: 0.8rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+}
+
+.flashcards div.selected {
+  background-color: red;
+  color: #fff;
+}
