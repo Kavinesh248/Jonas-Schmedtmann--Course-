@@ -33,23 +33,32 @@ function Accordion({ data }) {
         <AccordionItem
           num={i + 1}
           title={f.title}
-          text={f.text}
           key={f.title}
           curOpen={curOpen}
           onOpen={setCurOpen}
-        />
+        >
+          {f.text}
+        </AccordionItem>
       ))}
+      <AccordionItem num={4} title="Test" curOpen={curOpen} onOpen={setCurOpen}>
+        <p>Allows React Developers :R</p>
+        <ul>
+          <li>Break up UI into components</li>
+          <li>Make components reusable</li>
+          <li>Place state efficiently</li>
+        </ul>
+      </AccordionItem>
     </div>
   );
 }
 
-function AccordionItem({ num, title, text, curOpen, onOpen }) {
+function AccordionItem({ num, title, curOpen, onOpen, children }) {
   // const [isOpen, setIsOpen] = useState(false);
   const isOpen = num === curOpen;
 
   function handleToggle() {
     // setIsOpen(!isOpen);
-    onOpen(num);
+    onOpen(isOpen ? null : num);
   }
 
   return (
@@ -57,7 +66,7 @@ function AccordionItem({ num, title, text, curOpen, onOpen }) {
       <p className="number">{num < 9 ? `0${num}` : num}</p>
       <p className="title">{title}</p>
       <p className="icon">{isOpen ? "-" : "+"}</p>
-      {isOpen && <div className="content-box">{text}</div>}
+      {isOpen && <div className="content-box">{children}</div>}
     </div>
   );
 }
