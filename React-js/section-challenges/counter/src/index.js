@@ -20,19 +20,14 @@ function App() {
 
 function Counter() {
   const [step, setStep] = useState(1);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState("");
 
   const date = new Date();
   date.setDate(date.getDate() + count);
 
-  function handleClick(e) {
-    e.preventDefault();
-    setCount(count + step);
-  }
-
   function handleReset() {
     setStep(1);
-    setCount(0);
+    setCount("");
   }
 
   return (
@@ -50,16 +45,15 @@ function Counter() {
         />
         <label htmlFor="step">{step}</label>
       </div>
-      <form className="count" onSubmit={handleClick}>
-        <button>-</button>
+      <div className="count">
+        <button onClick={() => setCount(count - step)}>-</button>
         <input
-          type="text"
-          placeholder="Count..."
+          type="number"
           value={count}
           onChange={(e) => setCount(+e.target.value)}
         />
-        <button>+</button>
-      </form>
+        <button onClick={() => setCount(count + step)}>+</button>
+      </div>
       <p>
         <span>{count === 0 ? "Today is " : ""}</span>
         <span>{date.toDateString()}</span>
