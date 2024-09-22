@@ -19,21 +19,10 @@ html {
 
 body {
   height: 100vh;
-  width: 100vw;
   color: #495057;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
-}
-
-input,
-select {
-  border: 1px solid var(--color-light);
-}
-
-*:focus {
-  outline: none;
 }
 
 .app {
@@ -44,110 +33,137 @@ select {
   align-items: start;
 }
 
-.flex {
+.button {
+  background-color: var(--color-medium);
+  color: #343a40;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: 7px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.button:hover {
+  background-color: var(--color-dark);
+}
+
+.sidebar ul {
+  list-style: none;
   display: flex;
   flex-direction: column;
-}
-
-.list {
-  list-style: none;
-  gap: 2.4rem;
-  margin-bottom: 3.6rem;
-}
-
-.list-item {
-  display: grid;
-  grid-template-columns: 6.2rem 2fr 1fr;
-  align-items: center;
-  justify-items: start;
-}
-
-h3 {
-  font-size: 2rem;
-}
-
-img {
-  display: block;
-  border-radius: 100%;
-}
-
-button {
-  height: 2.8rem;
-  width: max-content;
-  padding: 0.2rem 1.6rem;
-  background-color: var(--color-dark);
+  gap: 0.4rem;
   font-size: 1.4rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 0.4rem;
-  cursor: pointer;
+  margin-bottom: 2rem;
 }
 
-.sidebar > button {
-  float: right;
-  margin-top: 1.8rem;
-}
-
-.add-friend {
-  font-size: 1.8rem;
-  font-weight: 600;
-  padding: 1.8rem;
-  background-color: var(--color-lightest);
-
+.sidebar li {
   display: grid;
-  gap: 2.4rem;
+  grid-template-columns: 4.8rem 1fr auto;
   align-items: center;
-  border-radius: 0.8rem;
+  column-gap: 1.6rem;
+
+  padding: 1.2rem;
+  border-radius: 7px;
+  transition: 0.5s;
 }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: 2.4rem 1fr 1fr;
-  gap: 0.8rem;
-  text-wrap: nowrap;
-}
-
-.add-friend button {
-  justify-self: flex-end;
-}
-
-.bill-container {
-  padding: 2.4rem;
+.selected,
+.sidebar li:hover {
   background-color: var(--color-lightest);
-  align-self: stretch;
-  border-radius: 0.8rem;
 }
 
-.bill-container h1 {
-  margin-bottom: 3.8rem;
+.sidebar li img {
+  border-radius: 50%;
+  width: 100%;
+  grid-row: span 2;
 }
 
-.bill-container .grid-container {
-  margin-bottom: 1.8rem;
-  align-items: center;
+.sidebar li h3 {
+  grid-row: 1;
+  grid-column: 2;
 }
 
-.bill-container div {
-  font-size: 1.8rem;
-  text-wrap: nowrap;
-  font-weight: 600;
-
-  height: 3rem;
+.sidebar li p {
+  grid-row: 2;
+  grid-column: 2;
 }
 
-.bill-container div input,
-.bill-container div select {
-  width: 12rem;
-  justify-self: end;
-  align-self: stretch;
+.sidebar li .button {
+  grid-row: span 2;
+  grid-column: 3;
 }
 
-.bill-container button {
-  margin-top: 2.4rem;
+.sidebar > .button {
   float: right;
-  height: 3.6rem;
+  margin-right: 1.2rem;
 }
-/* 
-.active {
-  display: block;
-} */
+
+.green {
+  color: #66a80f;
+}
+
+.red {
+  color: #e03131;
+}
+
+form {
+  font-size: 1.6rem;
+  display: grid;
+  align-items: center;
+  gap: 1.2rem;
+
+  background-color: var(--color-lightest);
+  border-radius: 7px;
+}
+
+.form-add-friend {
+  grid-template-columns: 1fr 1.5fr;
+  margin-bottom: 1.6rem;
+  padding: 1.2rem;
+}
+.form-split-bill {
+  grid-template-columns: 1fr 12rem;
+  padding: 3.2rem 4rem;
+}
+
+label {
+  font-weight: 500;
+}
+
+label::first-letter {
+  display: inline-block;
+  margin-right: 4px;
+  font-size: 1.8rem;
+}
+
+input,
+select {
+  font-family: inherit;
+  color: inherit;
+  font-size: 1.5rem;
+  padding: 0.7rem;
+  text-align: center;
+  border: 1px solid var(--color-light);
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border: 1px solid var(--color-dark);
+}
+
+form .button {
+  margin-top: 0.6rem;
+  grid-column: 2;
+}
+
+form h2 {
+  grid-column: 1 / -1;
+  font-size: 2.2rem;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+  margin-bottom: 1.6rem;
+}
