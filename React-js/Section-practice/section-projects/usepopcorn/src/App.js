@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const tempMovieData = [
   {
@@ -50,10 +50,73 @@ const tempWatchedData = [
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-export default function App() {
-  const [movies, setMovies] = useState(tempMovieData);
-  const [watched, setWatched] = useState(tempWatchedData);
+const KEY = "589d5fbd";
 
+export default function App() {
+  const [movies, setMovies] = useState([]);
+  const [watched, setWatched] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const query = "iron miiihiuhanhihihihi";
+
+  // useEffect(() => {
+  //   async function fetchMovies() {
+  //     try {
+  //       setIsLoading(true);
+  //       setError(""); // Clear any previous errors
+  //       const res = await fetch(
+  //         `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+  //       );
+
+  //       if (!res.ok)
+  //         throw new Error("Something went wrong with fetching data!");
+
+  //       const data = await res.json();
+  //       if (data.Response === "False") throw new Error("Movie not found");
+
+  //       setMovies(data.Search);
+  //     } catch (err) {
+  //       console.log("Caught error:", err); // Log the caught error
+  //       console.log("Error type:", typeof err); // Log the type of the error
+  //       console.log("Error message:", err.message); // Log the error message
+  //       setError(err.message); // Set only the error message
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }
+  //   fetchMovies();
+  // }, []);
+  useEffect(
+    function () {
+      async function fetchMovies() {
+        try {
+          setIsLoading(true);
+          setError("");
+
+          const res = await fetch(
+            `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+          );
+
+          if (!res.ok)
+            throw new Error("Something went wrong with fetching movies");
+          const data = await res.json();
+
+          if (data.Response === "False") throw new Error("Movie not found");
+
+          setMovies(data.Search);
+          setError("");
+        } catch (err) {
+          console.log(err);
+          setError(err.message);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+      fetchMovies();
+    },
+    [query]
+  );
   return (
     <>
       <NavBar>
@@ -63,7 +126,10 @@ export default function App() {
       </NavBar>
       <Main>
         <Box movies={movies}>
-          <MovieResultsList movies={movies} />
+          {/* {isLoading ? <Loader /> : <MovieResultsList movies={movies} />} */}
+          {isLoading && <Loader />}
+          {!isLoading && !error && <MovieResultsList movies={movies} />}
+          {error && <ErrorMessage message={error} />}
         </Box>
         <Box>
           <MovieSummary watched={watched} />
@@ -72,6 +138,14 @@ export default function App() {
       </Main>
     </>
   );
+}
+
+function Loader() {
+  return <p className="loader">Loading...</p>;
+}
+
+function ErrorMessage({ message }) {
+  return <p className="error">{message}</p>;
 }
 
 function NavBar({ children }) {
@@ -129,7 +203,7 @@ function MovieResultsList({ movies }) {
   return (
     <ul className="list">
       {movies?.map((movie) => (
-        <Movie movie={movie} />
+        <Movie movie={movie} key={movie.imdbID} />
       ))}
     </ul>
   );
@@ -208,7 +282,7 @@ function WatchedMoviesList({ watched }) {
   return (
     <ul className="list">
       {watched.map((movie) => (
-        <WatchedMovie movie={movie} />
+        <WatchedMovie movie={movie} key={movie.imdbID} />
       ))}
     </ul>
   );
