@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
-
+import { Link } from "react-router-dom";
+import { Twemoji } from "react-emoji-render";
 import styles from "./CityItem.module.css";
+import { useCities } from "../../contexts/CitiesContext";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -10,12 +12,31 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
 function CityItem({ city }) {
-  const { emoji, cityName, date } = city;
+  const {
+    emoji,
+    cityName,
+    date,
+    id,
+    position: { lat, lng },
+  } = city;
+
+  const { currentCity } = useCities();
+
   return (
-    <li className={styles.cityItem}>
-      <span className={styles.emoji}>{emoji}</span>
-      <h3 className={styles.name}>{cityName}</h3>
-      <time className={styles.date}>{formatDate(date)}</time>
+    <li>
+      <Link
+        className={`${styles.cityItem} ${
+          id === currentCity.id ? styles["cityItem--active"] : ""
+        }`}
+        to={`${id}?lat=${lat}&lng=${lng}`}
+      >
+        <span className={styles.emoji}>
+          <Twemoji text={emoji} />
+        </span>
+        <h3 className={styles.name}>{cityName}</h3>
+        <time className={styles.date}>({formatDate(date)})</time>
+        <button className={styles.deleteBtn}>x</button>
+      </Link>
     </li>
   );
 }
