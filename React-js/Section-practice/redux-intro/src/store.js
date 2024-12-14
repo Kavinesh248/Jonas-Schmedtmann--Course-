@@ -117,6 +117,8 @@ function updateName(fullName) {
 store.dispatch(deposit(1000));
 store.dispatch(requestLoan(2000));
 store.dispatch(withdraw(500));
+store.dispatch(payLoan());
 store.dispatch(createCustomer("kavinesh", "India"));
+store.dispatch(updateName("divyesh"));
 
 console.log(store.getState());
