@@ -13,7 +13,7 @@ function AccountOperations() {
   const {
     loan: currentLoan,
     loanPurpose: currentLoanPurpose,
-    balance: currentBalance,
+    // balance: currentBalance,
     isLoading,
   } = useSelector((store) => store.account);
 
